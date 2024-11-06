@@ -1,5 +1,5 @@
-questions.ts
-activeGroups.json
+/src/questions.ts
+/src/activeGroups.json
 
 /node_modules
 package-lock.json
