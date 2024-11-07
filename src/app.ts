@@ -1,5 +1,5 @@
-import { quizQuestions } from "./questions";
-import fs from "fs";
+import { loadQuizQuestions, saveQuizQuestions } from "./quizQuestions";
+import { activeGroupIds, loadGroupIds, saveGroupIds } from "./groupManagement";
 const TelegramBot = require("node-telegram-bot-api");
 
 const bot = new TelegramBot(process.env.TG_BOT_API, {
@@ -12,31 +12,12 @@ const bot = new TelegramBot(process.env.TG_BOT_API, {
   },
 });
 
-const FILE_PATH = "./src/activeGroups.json";
-let activeGroupIds = new Map<number, string>();
-
-
-// Function to load group IDs and Title from file
-function loadGroupIds() {
-  if (fs.existsSync(FILE_PATH)) {
-    const data = JSON.parse(fs.readFileSync(FILE_PATH, "utf8"));
-    activeGroupIds = new Map(data); // Load as a Map
-    console.log("Loaded group IDs and names from file:", activeGroupIds);
-  }
-}
-
-// Function to save group IDs and titles to file
-function saveGroupIds() {
-  const groupArray = Array.from(activeGroupIds.entries()); // Convert Map to Array of entries
-  fs.writeFileSync(FILE_PATH, JSON.stringify(groupArray), "utf8");
-}
-
+let quizQuestions = loadQuizQuestions(); // Load questions initially
 
 // Load group IDs when bot starts
 loadGroupIds();
-let currentQuestionIndex = 0;
-const interval = 900000;
-// const interval = 20000;
+// const interval = 900000;
+const interval = 30000;
 
 // Only add the group ID if it's a group and hasn't been added before
 bot.onText(/\/startquiz/, (msg: any) => {
@@ -59,27 +40,42 @@ bot.onText(/\/startquiz/, (msg: any) => {
 
 // Function to send the quiz question to each tracked group
 function sendQuizQuestion() {
-  if (currentQuestionIndex < quizQuestions.length) {
-    const question = quizQuestions[currentQuestionIndex];
-
-    activeGroupIds.forEach((chatName, chatId) => {
-      bot
-        .sendPoll(chatId, question.question, question.options, {
-          type: "quiz",
-          correct_option_id: question.correctOptionId,
-          is_anonymous: false,
-        })
-        .catch((error: any) => {
-          console.error(`Failed to send quiz to group ${chatId} (${chatName})`);
-        });
-    });
-
-    currentQuestionIndex++; // Move to the next question
-  } else {
-    currentQuestionIndex = 0; // Reset after the last question
+  if (quizQuestions.length === 0) {
+    console.log("Quiz questions list is empty, reloading...");
+    quizQuestions = loadQuizQuestions(); // Reload questions from file
+    if (quizQuestions.length === 0) {
+      console.log("No quiz questions available in the file.");
+      return;
+    }
   }
+
+  const question = quizQuestions[0];
+
+  console.log("Quiz sent!");
+  activeGroupIds.forEach((chatName, chatId) => {
+    bot
+      .sendPoll(chatId, question.question, question.options, {
+        type: "quiz",
+        correct_option_id: question.correctOptionId,
+        is_anonymous: false,
+      })
+      .catch((error: any) => {
+        console.error(`Failed to send quiz to group ${chatId} (${chatName})`);
+      });
+  });
+  quizQuestions.shift(); // Remove the sent question from the local array
+  saveQuizQuestions(quizQuestions); // Update the questions.js file
 }
 
-// Schedule the quiz to be sent every 15 minutes (900000 ms)
-setInterval(sendQuizQuestion, interval); // 15 minutes
+// Schedule the quiz to be sent at intervals
+setInterval(() => {
+  quizQuestions = loadQuizQuestions(); // Reload questions from file to make sure the array is always up-to-date
+  sendQuizQuestion(); // Send the next quiz question
+}, interval);
 console.log("interval time:", interval / 60000, "mins");
+
+// [
+//   [-1002002320065, "test"],
+//   [-4586135068, "test 2"],
+//   [-1002133503411, "Just for debate"]
+// ]
