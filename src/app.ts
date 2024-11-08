@@ -14,8 +14,8 @@ const bot = new TelegramBot(process.env.TG_BOT_API, {
 
 // Load group IDs when bot starts
 loadGroupIds();
-// const interval = 900000;
-const interval = 10000;
+const interval = 900000;
+// const interval = 10000;
 
 // Only add the group ID if it's a group and hasn't been added before
 bot.onText(/\/startquiz/, (msg: any) => {
