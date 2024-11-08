@@ -1,6 +1,5 @@
 import { loadQuizQuestions, saveQuizQuestions } from "./quizQuestions";
 import { activeGroupIds, loadGroupIds, saveGroupIds } from "./groupManagement";
-import { books } from "./db/migrations/schema";
 const TelegramBot = require("node-telegram-bot-api");
 
 const bot = new TelegramBot(process.env.TG_BOT_API, {
@@ -13,12 +12,10 @@ const bot = new TelegramBot(process.env.TG_BOT_API, {
   },
 });
 
-// let quizQuestions = await loadQuizQuestions(); // Load questions initially
-
 // Load group IDs when bot starts
 loadGroupIds();
-// const interval = 900000;
-const interval = 10000;
+const interval = 900000;
+// const interval = 10000;
 
 // Only add the group ID if it's a group and hasn't been added before
 bot.onText(/\/startquiz/, (msg: any) => {
@@ -75,21 +72,6 @@ setInterval(async () => {
   sendQuizQuestion(); // Send the next quiz question
 }, interval);
 console.log("interval time:", interval / 60000, "mins");
-
-// async function get() {
-//   const quizs = await db.select().from(books).limit(1);
-//
-//   // Type cast to ensure `activeGroups` is recognized as an array of tuples.
-//   const allQuiz = new Map(quizs[0].activeGroups as [number, string][]);
-//   console.log(allQuiz);
-// }
-// get();
-//
-// async function get() {
-//   const quizs = await db.select().from(books).limit(1)
-//   let allQuiz = new Map<number, string>(quizs[0].activeGroups);
-//   console.log(allQuiz)
-// }; get()
 
 // [
 //   [-1002002320065, "test"],

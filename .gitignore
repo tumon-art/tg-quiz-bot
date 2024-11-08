@@ -1,9 +1,4 @@
-/src/questions.json
-/src/activeGroups.json
-
 /node_modules
-/build
-package-lock.json
 
 # local env files
 .env
