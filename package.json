@@ -13,13 +13,18 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "node-telegram-bot-api": "^0.66.0"
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.36.1",
+    "node-telegram-bot-api": "^0.66.0",
+    "postgres": "^3.4.5"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.5.9",
     "@types/node": "^22.9.0",
+    "drizzle-kit": "^0.28.0",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.6.3"
   }
 }
