@@ -2,7 +2,7 @@ import { loadQuizQuestions, saveQuizQuestions } from "./quizQuestions";
 import { activeGroupIds, loadGroupIds, saveGroupIds } from "./groupManagement";
 import { createChart } from "./chart";
 const TelegramBot = require("node-telegram-bot-api");
-const http = require("http");
+// const http = require("http");
 import * as fs from 'fs';
 
 const bot = new TelegramBot(process.env.TG_BOT_API, {
@@ -143,15 +143,15 @@ setInterval(async () => {
 }, interval);
 console.log("interval time:", interval / 60000, "mins");
 
-// HTTP server for health check
-const server = http.createServer((_req: any, res: any) => {
-  res.writeHead(200, { "Content-Type": "text/plain" });
-  res.end("Bot is running!\n");
-});
-
-server.listen(8080, () => {
-  console.log("HTTP server is listening on port 8080");
-});
+// // HTTP server for health check
+// const server = http.createServer((_req: any, res: any) => {
+//   res.writeHead(200, { "Content-Type": "text/plain" });
+//   res.end("Bot is running!\n");
+// });
+//
+// server.listen(8080, () => {
+//   console.log("HTTP server is listening on port 8080");
+// });
 
 // [
 //   [-1002002320065, "test"],
