@@ -13,6 +13,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/chart.js": "^2.9.41",
+    "chart.js": "^3.9.1",
+    "chartjs-node-canvas": "^4.1.6",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.36.1",
     "node-telegram-bot-api": "^0.66.0",
