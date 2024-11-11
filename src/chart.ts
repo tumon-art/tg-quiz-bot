@@ -23,7 +23,7 @@ export async function createChart(labels: string[], data: number[]) {
         {
           label: 'Distribution',
           data,
-          backgroundColor: ['#ff9999', '#66b3ff', '#99ff99'],
+          backgroundColor: ['#f39', '#25f', "#4543df", '#99ff99', '#ff9999', "#3ff", '#fe9'],
         },
       ],
     },
