@@ -72,6 +72,7 @@ function parsePlotCommand(text) {
 //
 // Listen for /plot command with new format
 bot.onText(/\/plot\s+(.*)/, (msg, match) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('/plot');
     const chatId = msg.chat.id;
     const commandText = match[1].trim(); // Remove leading/trailing spaces
     console.log("Received command:", commandText); // Log the received command

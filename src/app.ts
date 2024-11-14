@@ -44,6 +44,7 @@ function parsePlotCommand(text: string): { labels: string[]; data: number[] } | 
 //
 // Listen for /plot command with new format
 bot.onText(/\/plot\s+(.*)/, async (msg: any, match: any) => {
+  console.log('/plot')
   const chatId = msg.chat.id;
   const commandText = match[1].trim();  // Remove leading/trailing spaces
 

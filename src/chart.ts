@@ -23,7 +23,7 @@ export async function createChart(labels: string[], data: number[]) {
         {
           label: 'Distribution',
           data,
-          backgroundColor: ['#f39', '#25f', "#4543df", '#99ff99', '#ff9999', "#3ff", '#fe9'],
+          backgroundColor: ['#f39', '#25f', "#4543df", '#99ff11', '#ff9999', "#3ff", '#fe9'],
         },
       ],
     },
@@ -32,12 +32,9 @@ export async function createChart(labels: string[], data: number[]) {
       plugins: {
         legend: { position: 'top' },
         tooltip: { enabled: true },
+
         datalabels: {
           color: '#000',
-          formatter: (value, context) => {
-            const label = context.chart.data.labels?.[context.dataIndex];
-            return `${label}: ${value}%`;
-          },
           font: { weight: 'bold', size: 14 },
         },
       },

@@ -59,7 +59,7 @@ function createChart(labels, data) {
                     {
                         label: 'Distribution',
                         data,
-                        backgroundColor: ['#f39', '#25f', "#4543df", '#99ff99', '#ff9999', "#3ff", '#fe9'],
+                        backgroundColor: ['#f39', '#25f', "#4543df", '#99ff11', '#ff9999', "#3ff", '#fe9'],
                     },
                 ],
             },
@@ -70,11 +70,6 @@ function createChart(labels, data) {
                     tooltip: { enabled: true },
                     datalabels: {
                         color: '#000',
-                        formatter: (value, context) => {
-                            var _a;
-                            const label = (_a = context.chart.data.labels) === null || _a === void 0 ? void 0 : _a[context.dataIndex];
-                            return `${label}: ${value}%`;
-                        },
                         font: { weight: 'bold', size: 14 },
                     },
                 },
